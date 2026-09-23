@@ -187,6 +187,38 @@
   .stack-tags { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px; }
   .stack-tags span { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; padding: 4px 10px; border: 1px solid var(--line); border-radius: 20px; color: var(--ink-soft); }
 
+  /* laboratorio de automatizacion */
+  .automation-lab { background: var(--navy-deep); color: #eef2f7; border: 1px solid #1c2c56; padding: 30px; position: relative; overflow: hidden; }
+  .automation-lab::after { content: ""; position: absolute; width: 260px; height: 260px; right: -110px; top: -120px; border: 1px solid rgba(var(--glow), .18); transform: rotate(45deg); pointer-events: none; }
+  .lab-layout { display: grid; grid-template-columns: .85fr 1.15fr; gap: 28px; align-items: start; }
+  .lab-copy h3 { color: #f4f7fb; font-size: 25px; margin: 0 0 12px; text-transform: uppercase; }
+  .lab-copy p { color: #aebbd0; margin: 0 0 20px; max-width: 42ch; }
+  .lab-offer { display: inline-flex; align-items: baseline; gap: 8px; margin: 0 0 18px; }
+  .lab-offer-label { color: #8ba0c8; font: 11px 'JetBrains Mono', monospace; text-transform: uppercase; }
+  .lab-price { color: var(--teal); font: 700 26px 'Chakra Petch', sans-serif; }
+  .lab-switcher { display: flex; flex-wrap: wrap; gap: 8px; }
+  .lab-switch { border: 1px solid #33456f; background: transparent; color: #c3cee0; cursor: pointer; font: 600 12px 'JetBrains Mono', monospace; padding: 9px 11px; text-transform: uppercase; }
+  .lab-switch:hover, .lab-switch[aria-selected="true"] { background: var(--teal); border-color: var(--teal); color: #04222a; }
+  .lab-console { background: #071021; border: 1px solid #263a62; min-width: 0; }
+  .lab-console-head { padding: 11px 15px; border-bottom: 1px solid #263a62; color: #8ba0c8; font: 11px 'JetBrains Mono', monospace; }
+  .lab-console-head::before { content: "●  ●  ●"; color: var(--teal); letter-spacing: 4px; margin-right: 14px; }
+  .lab-flow { padding: 19px; display: grid; gap: 8px; }
+  .lab-node { display: grid; grid-template-columns: 32px 1fr auto; gap: 10px; align-items: center; border: 1px solid #263a62; padding: 11px 12px; background: #0c1930; }
+  .lab-node .node-index { color: var(--teal); font: 12px 'JetBrains Mono', monospace; }
+  .lab-node strong { display: block; color: #f4f7fb; font-size: 14px; }
+  .lab-node small { color: #8ba0c8; font: 11px 'JetBrains Mono', monospace; }
+  .lab-node .node-state { color: var(--teal); font: 11px 'JetBrains Mono', monospace; text-transform: uppercase; }
+  .lab-arrow { color: #52709d; font: 14px 'JetBrains Mono', monospace; padding-left: 14px; }
+  .lab-result { border-top: 1px dashed #33456f; margin: 3px 19px 19px; padding: 14px 0 0; color: #c3cee0; font-size: 13px; }
+  .lab-result strong { color: var(--teal); font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; }
+  .lab-result span { color: #eef2f7; }
+  .lab-cta { display: inline-flex; margin-top: 22px; align-items: center; gap: 9px; color: #04222a; background: var(--teal); font: 600 14px 'Chakra Petch', sans-serif; padding: 12px 16px; text-decoration: none; text-transform: uppercase; }
+  .lab-cta:hover { background: #69e5e9; }
+  .wa-float { position: fixed; z-index: 10; right: 22px; bottom: 22px; display: inline-flex; align-items: center; gap: 9px; padding: 12px 15px; background: #18b964; border: 2px solid #d8ffe9; box-shadow: 0 8px 25px rgba(0,0,0,.22); color: #062714; font: 700 13px 'JetBrains Mono', monospace; text-decoration: none; text-transform: uppercase; }
+  .wa-float:hover { background: #55d98e; transform: translateY(-2px); }
+  @media (max-width: 760px) { .lab-layout { grid-template-columns: 1fr; gap: 22px; } .automation-lab { padding: 23px 18px; } .lab-node { grid-template-columns: 26px 1fr; } .lab-node .node-state { grid-column: 2; } .wa-float { position: relative; right: auto; bottom: auto; margin: 0 14px 18px auto; width: max-content; } }
+  @media (prefers-reduced-motion: reduce) { .wa-float { transition: none; } }
+
   /* pull quote */
   .pull { font-family: 'Chakra Petch', sans-serif; font-weight: 600; font-size: clamp(22px, 3.6vw, 32px); line-height: 1.32; color: var(--ink); max-width: 26ch; text-wrap: balance; }
   .pull .accent { color: var(--teal-deep); }
@@ -223,7 +255,7 @@
     <h1>De la idea<br>al <span class="accent">servidor.</span></h1>
     <p class="lede">Automatización, integración de sistemas e infraestructura cloud. Un solo interlocutor técnico que diseña, automatiza y despliega — sin traducir entre tres proveedores distintos.</p>
     <div class="cta-row">
-      <a class="btn primary" href="mailto:anthonybastidasuah@gmail.com?subject=Proyecto%20con%20AlbaCode">Hablemos de tu proyecto</a>
+      <a class="btn primary" href="https://wa.me/584122967035?text=Hola%20AlbaCode%2C%20quiero%20hablar%20sobre%20mi%20proyecto%20y%20solicitar%20una%20cotizaci%C3%B3n." target="_blank" rel="noopener noreferrer">Hablemos de tu proyecto</a>
       <a class="btn ghost" href="#casos">Ver caso de estudio</a>
     </div>
     <div class="stack-row">
@@ -262,9 +294,38 @@
     </div>
   </section>
 
+  <section class="section" id="laboratorio">
+    <div class="section-head">
+      <span class="eyebrow">02 &middot; Soluciones a tu medida</span>
+      <h2>Tu necesidad. Tu solución. Tu cotización.</h2>
+      <p>Elige el área que quieres mejorar y descubre una referencia inicial. Nos adaptamos a tus necesidades y presupuesto.</p>
+    </div>
+    <div class="automation-lab">
+      <div class="lab-layout">
+        <div class="lab-copy">
+          <div class="mono" style="color:var(--teal);font-size:12px;margin-bottom:14px">albacode / propuesta-preview</div>
+          <h3 id="labTitle">Automatización para vender más</h3>
+          <p id="labDescription">Cada nuevo contacto recibe una respuesta, queda registrado y llega a la persona correcta sin depender de una hoja de cálculo.</p>
+          <div class="lab-offer"><span class="lab-offer-label">Proyectos desde</span><span class="lab-price" id="labPrice">USD 180</span></div>
+          <div class="lab-switcher" role="tablist" aria-label="Escenarios de automatización">
+            <button class="lab-switch" type="button" role="tab" aria-selected="true" data-lab="ventas">Quiero vender</button>
+            <button class="lab-switch" type="button" role="tab" aria-selected="false" data-lab="soporte">Quiero atender</button>
+            <button class="lab-switch" type="button" role="tab" aria-selected="false" data-lab="operaciones">Quiero ordenar</button>
+          </div>
+          <a class="lab-cta" href="https://wa.me/584122967035?text=Hola%20AlbaCode%2C%20quiero%20solicitar%20una%20cotizaci%C3%B3n%20para%20mi%20proyecto." target="_blank" rel="noopener noreferrer">Solicitar mi cotización <span aria-hidden="true">-&gt;</span></a>
+        </div>
+        <div class="lab-console" aria-live="polite">
+          <div class="lab-console-head">albacode / solution-preview</div>
+          <div class="lab-flow" id="labFlow"></div>
+          <div class="lab-result"><strong>lo que puedes conseguir</strong><br><span id="labResult">Más oportunidades atendidas y un seguimiento comercial sin esfuerzo.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="section">
     <div class="section-head">
-      <span class="eyebrow">02 &middot; Proceso</span>
+      <span class="eyebrow">03 &middot; Proceso</span>
       <h2>Cómo se trabaja</h2>
       <p>Mismo proceso que usa cada propuesta que recibes: nada empieza sin alcance y cronograma por escrito.</p>
     </div>
@@ -278,7 +339,7 @@
 
   <section class="section">
     <div class="section-head">
-      <span class="eyebrow">03 &middot; A quién ayudo</span>
+      <span class="eyebrow">04 &middot; A quién ayudo</span>
       <h2>Perfiles frecuentes</h2>
     </div>
     <div class="segments">
@@ -299,7 +360,7 @@
 
   <section class="section" id="casos">
     <div class="section-head">
-      <span class="eyebrow">04 &middot; Caso de estudio</span>
+      <span class="eyebrow">05 &middot; Caso de estudio</span>
       <h2>LadinCloud</h2>
       <p>El caso más reciente: infraestructura cloud desde cero, documentada de principio a fin.</p>
     </div>
@@ -347,7 +408,58 @@
 
 </div>
 
+<a class="wa-float" href="https://wa.me/584122967035?text=Hola%20AlbaCode%2C%20quiero%20conversar%20sobre%20una%20automatizaci%C3%B3n." target="_blank" rel="noopener noreferrer" aria-label="Contactar a AlbaCode por WhatsApp"><span aria-hidden="true">WA</span> WhatsApp</a>
+
 <script>
+(function () {
+  var scenarios = {
+    ventas: {
+      title: 'Automatización para vender más',
+      description: 'Responde más rápido, organiza tus prospectos y evita que una oportunidad se pierda por falta de seguimiento.',
+      price: 'USD 180',
+      result: 'Más oportunidades atendidas y un seguimiento comercial sin esfuerzo.',
+      nodes: [['01', 'Entrada', 'formulario / WhatsApp'], ['02', 'Clasificación', 'n8n + reglas'], ['03', 'Seguimiento', 'CRM + aviso al equipo']]
+    },
+    soporte: {
+      title: 'Atención al cliente sin caos',
+      description: 'Centraliza solicitudes, clasifica conversaciones y responde con contexto para ofrecer una experiencia más profesional.',
+      price: 'USD 220',
+      result: 'Respuestas más rápidas, clientes mejor atendidos y menos conversaciones perdidas.',
+      nodes: [['01', 'Mensaje recibido', 'WhatsApp / correo'], ['02', 'Lectura', 'IA + etiquetas'], ['03', 'Asignación', 'Chatwoot + alerta']]
+    },
+    operaciones: {
+      title: 'Operaciones que trabajan mejor',
+      description: 'Conecta tus herramientas, reduce tareas repetitivas y convierte los datos del día a día en acciones claras.',
+      price: 'USD 250',
+      result: 'Más control operativo sin aumentar la carga de tu equipo.',
+      nodes: [['01', 'Datos', 'hoja / API / ERP'], ['02', 'Validación', 'reglas + control'], ['03', 'Reporte', 'correo + dashboard']]
+    }
+  };
+  var title = document.getElementById('labTitle');
+  var description = document.getElementById('labDescription');
+  var price = document.getElementById('labPrice');
+  var result = document.getElementById('labResult');
+  var flow = document.getElementById('labFlow');
+  function renderScenario(key) {
+    var scenario = scenarios[key];
+    title.textContent = scenario.title;
+    description.textContent = scenario.description;
+    price.textContent = scenario.price;
+    result.textContent = scenario.result;
+    flow.innerHTML = scenario.nodes.map(function (node, index) {
+      var arrow = index ? '' : '<div class="lab-arrow">|</div>';
+      return arrow + '<div class="lab-node"><span class="node-index">' + node[0] + '</span><span><strong>' + node[1] + '</strong><small>' + node[2] + '</small></span><span class="node-state">ready</span></div>';
+    }).join('');
+  }
+  document.querySelectorAll('.lab-switch').forEach(function (button) {
+    button.addEventListener('click', function () {
+      document.querySelectorAll('.lab-switch').forEach(function (item) { item.setAttribute('aria-selected', item === button ? 'true' : 'false'); });
+      renderScenario(button.dataset.lab);
+    });
+  });
+  renderScenario('ventas');
+})();
+
 (function () {
   function chromaKey(src, mode, canvas) {
     var img = new Image();
