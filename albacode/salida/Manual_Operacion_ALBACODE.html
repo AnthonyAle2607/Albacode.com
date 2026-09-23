@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ALBACODE — Manual de operación</title>
+<style>
+  :root{
+    --bg:#f5f6f7; --card:#fff; --ink:#15181c; --soft:#414750; --mute:#767d86;
+    --rule:#e2e5ea; --accent:#b5610f; --accent-bg:#fdf2e6; --accent-ink:#8d4a09;
+    --ok:#1c6b45; --ok-bg:#e8f4ed; --warn:#8a5a10; --warn-bg:#fcf3e2;
+    --bad:#98342c; --bad-bg:#fbeceb; --ghost:#f0f2f4;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#131619; --card:#1b1f23; --ink:#e9ecef; --soft:#b5bcc3; --mute:#848c94;
+      --rule:#2a3035; --accent:#e59245; --accent-bg:#2c2014; --accent-ink:#f0a862;
+      --ok:#6fcf9b; --ok-bg:#16291f; --warn:#e0b361; --warn-bg:#2a2214;
+      --bad:#e8918a; --bad-bg:#2b1917; --ghost:#22272b;
+    }
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.55;font-size:15px;padding:30px 18px 70px;
+  }
+  .wrap{max-width:1020px;margin:0 auto}
+
+  .brand{display:flex;align-items:center;gap:11px;margin-bottom:5px}
+  .logo{width:38px;height:38px;border-radius:9px;background:linear-gradient(135deg,var(--accent),#e0a050);
+    color:#fff;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;letter-spacing:-.5px;flex:none}
+  h1{font-size:27px;font-weight:650;letter-spacing:-.6px;line-height:1.1}
+  .sub{color:var(--mute);font-size:13.5px;margin-top:6px}
+
+  .lede{margin-top:18px;padding:16px 18px;background:var(--card);border-left:3px solid var(--accent);
+    border-radius:0 7px 7px 0;color:var(--soft)}
+  .lede b{color:var(--ink)}
+
+  h2{font-size:12px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent);margin:38px 0 4px}
+  h2 .n{color:var(--mute);font-weight:600;margin-right:7px}
+  .h2note{color:var(--mute);font-size:13.5px;margin-bottom:14px;max-width:80ch}
+
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:9px;padding:17px 19px;margin-bottom:12px}
+  .card h3{font-size:16px;font-weight:650;margin-bottom:6px}
+  .card h4{font-size:13.5px;font-weight:700;color:var(--accent-ink);margin:13px 0 5px;letter-spacing:.2px}
+  .card p{color:var(--soft);font-size:14.5px;margin-bottom:9px}
+  .card p:last-child{margin-bottom:0}
+  .card.bad{border-left:3px solid var(--bad)}
+  .card.flush{padding:0;overflow:hidden}
+
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th{text-align:left;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--mute);
+    padding:10px 14px;border-bottom:1px solid var(--rule);white-space:nowrap}
+  td{padding:11px 14px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--soft)}
+  tr:last-child td{border-bottom:0}
+  td b,.co{color:var(--ink);font-weight:600}
+  .bar{display:block;height:5px;border-radius:3px;background:var(--accent);margin-top:5px}
+
+  .role{background:var(--card);border:1px solid var(--rule);border-radius:9px;margin-bottom:13px;overflow:hidden}
+  .role-h{padding:13px 18px;background:var(--ghost);border-bottom:1px solid var(--rule);
+    display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .role-h h3{font-size:16.5px;font-weight:650}
+  .role-h .time{font-size:12px;font-weight:700;color:var(--accent-ink);background:var(--accent-bg);
+    padding:3px 9px;border-radius:4px;white-space:nowrap}
+  .role-b{padding:15px 18px}
+
+  ul.plain{list-style:none}
+  ul.plain li{position:relative;padding-left:15px;margin-bottom:7px;color:var(--soft);font-size:14.5px}
+  ul.plain li::before{content:"";position:absolute;left:0;top:8px;width:4px;height:4px;border-radius:50%;background:var(--accent)}
+  ul.plain li b{color:var(--ink)}
+
+  ol.steps{list-style:none;counter-reset:s}
+  ol.steps li{counter-increment:s;position:relative;padding-left:33px;margin-bottom:10px;color:var(--soft);font-size:14.5px}
+  ol.steps li::before{content:counter(s);position:absolute;left:0;top:1px;width:22px;height:22px;border-radius:50%;
+    background:var(--accent);color:#fff;font-size:11.5px;font-weight:700;display:flex;align-items:center;justify-content:center}
+  ol.steps li b{color:var(--ink)}
+
+  .quote{background:var(--ghost);border-radius:7px;padding:12px 15px;margin:9px 0;
+    font-size:14.5px;color:var(--ink);border-left:2.5px solid var(--accent)}
+  .quote em{color:var(--mute);font-style:normal;font-size:13px;display:block;margin-top:5px}
+
+  .tag{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:3px;text-transform:uppercase;white-space:nowrap}
+  .t-1{background:var(--accent-bg);color:var(--accent-ink)}
+  .t-ok{background:var(--ok-bg);color:var(--ok)}
+  .t-warn{background:var(--warn-bg);color:var(--warn)}
+  .t-bad{background:var(--bad-bg);color:var(--bad)}
+
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media (max-width:720px){
+    .two{grid-template-columns:1fr}
+    body{padding:20px 13px 45px} h1{font-size:22px}
+    th,td{padding:9px 11px;font-size:13px} .hide-s{display:none}
+  }
+  footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--rule);color:var(--mute);font-size:12.5px}
+  code{font-family:Consolas,Menlo,monospace;font-size:12.5px;background:var(--accent-bg);color:var(--accent-ink);padding:1.5px 5px;border-radius:3px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="brand">
+  <div class="logo">AC</div>
+  <div>
+    <h1>Manual de operación</h1>
+    <div class="sub">ALBACODE · qué haces, cómo lo haces y cómo consigues clientes · 11 de septiembre de 2026</div>
+  </div>
+</div>
+
+<div class="lede">
+  <b>Este documento existe para resolver un problema concreto: eres una sola persona haciendo
+  el trabajo de siete.</b> Sin repartir tu tiempo a propósito, vas a hacer lo que te resulta
+  cómodo —construir— y vas a evitar lo que da miedo —vender—. Eso no se arregla con fuerza de
+  voluntad, se arregla con estructura. Aquí está la estructura.
+</div>
+
+<h2><span class="n">01</span>Los siete sombreros</h2>
+<div class="h2note">
+  Todos los llevas tú. Lo que cambia no es quién los lleva, sino cuánto tiempo dedicas a cada
+  uno — y esa distribución es la decisión de gestión más importante que vas a tomar.
+</div>
+<div class="card flush">
+  <table>
+    <thead><tr><th>Función</th><th class="hide-s">De qué responde</th><th>Tiempo en arranque</th></tr></thead>
+    <tbody>
+      <tr><td><span class="co">Comercial</span></td><td class="hide-s">Que entren clientes. Prospectar, contactar, reunirse, cotizar, dar seguimiento y cerrar.</td><td><b>30%</b><span class="bar" style="width:100%"></span></td></tr>
+      <tr><td><span class="co">Marketing</span></td><td class="hide-s">Que te conozcan sin que tengas que tocar la puerta. Contenido, presencia, reputación.</td><td><b>15%</b><span class="bar" style="width:50%"></span></td></tr>
+      <tr><td><span class="co">Consultor</span></td><td class="hide-s">Entender el negocio del cliente y decidir qué se automatiza. Es lo que separa una solución de un capricho técnico.</td><td><b>10%</b><span class="bar" style="width:33%"></span></td></tr>
+      <tr><td><span class="co">Implementador</span></td><td class="hide-s">Construir, probar, documentar y entregar lo vendido.</td><td><b>25%</b><span class="bar" style="width:83%"></span></td></tr>
+      <tr><td><span class="co">Formador</span></td><td class="hide-s">Diseñar y dictar las capacitaciones de la línea de IA.</td><td><b>5%</b><span class="bar" style="width:17%"></span></td></tr>
+      <tr><td><span class="co">Administración</span></td><td class="hide-s">Cotizar, facturar, cobrar, llevar cuentas, cumplir con lo legal.</td><td><b>10%</b><span class="bar" style="width:33%"></span></td></tr>
+      <tr><td><span class="co">Aprendizaje</span></td><td class="hide-s">Mantenerte vigente. En IA lo que sabes caduca en meses, no en años.</td><td><b>5%</b><span class="bar" style="width:17%"></span></td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="card bad">
+  <h3>La trampa que te va a costar el negocio</h3>
+  <p>Eres técnico. Tu instinto va a ser dedicar el 80% a construir y el 20% a vender, porque
+    construir se siente productivo y vender se siente incómodo. <b>Esa distribución mata
+    negocios de servicios profesionales, y los mata cuando ya es tarde</b>: entregas bien un
+    proyecto, no prospectaste durante el mes que duró, y al terminarlo no hay nada detrás.</p>
+  <p>En arranque, <b>45% de tu tiempo va a comercial y marketing juntos</b>. No es negociable
+    mientras no tengas cartera. Cuando tengas tres clientes recurrentes, se puede bajar.</p>
+</div>
+
+<h2><span class="n">02</span>Cómo ejecutas cada función</h2>
+<div class="h2note">Qué haces exactamente en cada sombrero, con el proceso concreto y no con la descripción abstracta.</div>
+
+<div class="role">
+  <div class="role-h"><h3>Comercial</h3><div class="time">30% · ~12 h/semana</div></div>
+  <div class="role-b">
+    <p>Tu trabajo aquí no es «vender», es <b>mover gente por un embudo de cinco etapas</b> y
+      saber en todo momento cuántos tienes en cada una.</p>
+    <ol class="steps">
+      <li><b>Prospectar.</b> Sumar nombres concretos a la lista, con empresa y persona. Meta: 10 nuevos por semana.</li>
+      <li><b>Contactar.</b> Mensaje corto, personalizado, con una observación real sobre su negocio. Nunca un catálogo pegado.</li>
+      <li><b>Diagnosticar.</b> Reunión de 30-45 minutos donde escuchas más de lo que hablas. Pasa al sombrero de consultor.</li>
+      <li><b>Cotizar.</b> Propuesta en 48 horas máximo, de una página, con alcance, plazo y precio cerrado.</li>
+      <li><b>Cerrar y dar seguimiento.</b> Aquí se cae la mayoría de las ventas, no por rechazo sino por silencio. Si no responden, insistes tres veces en dos semanas y luego los mueves a «dormido». No los borras.</li>
+    </ol>
+    <h4>Regla de oro del seguimiento</h4>
+    <p>Toda conversación termina con una <b>próxima acción y una fecha</b>, dicha en voz alta:
+      «te mando la propuesta el jueves y te escribo el lunes». Una reunión que termina en
+      «cualquier cosa me avisas» es una reunión perdida.</p>
+  </div>
+</div>
+
+<div class="role">
+  <div class="role-h"><h3>Consultor · diagnóstico</h3><div class="time">10% · ~4 h/semana</div></div>
+  <div class="role-b">
+    <p>Es la función que más te diferencia y la que más se salta la gente técnica. <b>El
+      cliente no sabe qué necesita</b>: te va a pedir «una app» cuando lo que tiene es un
+      problema de proceso. Tu trabajo es traducir.</p>
+    <h4>Las siete preguntas de diagnóstico</h4>
+    <div class="quote">
+      1. Cuéntame cómo hacen esto hoy, paso a paso, desde que entra hasta que sale.<br>
+      2. ¿Cuántas veces a la semana pasa, y cuánto tiempo se lleva cada vez?<br>
+      3. ¿Quién lo hace? ¿Qué más haría esa persona si no estuviera haciendo esto?<br>
+      4. ¿Qué pasa cuando alguien se equivoca aquí? ¿Cuánto cuesta ese error?<br>
+      5. ¿Qué sistemas tocan en el camino? ¿Se hablan entre ellos o alguien copia y pega?<br>
+      6. Si esto se resolviera solo mañana, ¿qué harían con ese tiempo?<br>
+      7. ¿Han intentado arreglarlo antes? ¿Qué pasó?
+      <em>La 4 y la 7 son las que más información dan. La 4 te da el número con el que justificas el precio; la 7 te dice contra qué prejuicio compites.</em>
+    </div>
+    <h4>Cómo eliges qué automatizar primero</h4>
+    <p>De todo lo que detectes, prioriza lo que sea <b>repetitivo, con reglas claras, de alto
+      volumen y bajo riesgo si falla</b>. Nunca arranques por el proceso crítico del negocio:
+      si tu primera automatización rompe la facturación, no hay segunda. Empieza por algo
+      visible pero no vital, demuestra que funciona, y entonces te dejan tocar lo importante.</p>
+    <h4>El entregable del diagnóstico</h4>
+    <p>Un documento de una página: los tres procesos más automatizables, cuántas horas al mes
+      se llevan hoy, y qué quedaría al automatizarlos. <b>Ese documento vale por sí solo</b> —
+      es lo que le cobras barato o le regalas para entrar.</p>
+  </div>
+</div>
+
+<div class="role">
+  <div class="role-h"><h3>Implementador</h3><div class="time">25% · ~10 h/semana</div></div>
+  <div class="role-b">
+    <p>Construir es lo que ya sabes hacer. Lo que hay que imponer aquí es <b>disciplina de
+      entrega</b>, porque un proyecto que se alarga te bloquea la agenda y te impide vender.</p>
+    <ol class="steps">
+      <li><b>Levantamiento.</b> Documenta el proceso actual y hazlo validar por escrito antes de tocar nada.</li>
+      <li><b>Prototipo rápido.</b> Muéstralo funcionando en días, no semanas, aunque sea parcial. Ver algo andando cambia por completo la conversación.</li>
+      <li><b>Validación con quien lo va a usar.</b> No con quien lo compró. Son personas distintas y quieren cosas distintas.</li>
+      <li><b>Producción.</b> Con manejo de errores y alertas cuando algo falle. Una automatización que falla en silencio es peor que no tenerla.</li>
+      <li><b>Documentación y traspaso.</b> Una sesión grabada explicando cómo funciona y qué hacer si se cae.</li>
+    </ol>
+    <h4>Lo que te va a doler si no lo defines desde el principio</h4>
+    <p><b>Qué pasa después de entregar.</b> Si no lo dejas escrito, el cliente va a asumir que
+      lo mantienes gratis para siempre. Define desde la propuesta: un período de garantía
+      corto para corregir fallas, y a partir de ahí, un plan de acompañamiento mensual que se
+      cobra aparte. Ese plan es, además, tu única fuente de ingreso predecible.</p>
+  </div>
+</div>
+
+<div class="role">
+  <div class="role-h"><h3>Marketing</h3><div class="time">15% · ~6 h/semana</div></div>
+  <div class="role-b">
+    <p>Marketing aquí no es publicidad: es <b>que cuando alguien pregunte por ti, encuentre
+      pruebas</b>. Siendo desconocido y sin trayectoria, tu contenido no es promoción, es
+      evidencia de que sabes.</p>
+    <p>Con una hora al día haces lo que importa: documentar lo que construyes y publicarlo.
+      Cada automatización que entregues, con permiso del cliente, es una publicación.</p>
+    <p><b>Los canales concretos para Venezuela están en el bloque 05</b>, que sale de una
+      investigación del mercado local y no de suposiciones.</p>
+  </div>
+</div>
+
+<div class="role">
+  <div class="role-h"><h3>Formador</h3><div class="time">5% · ~2 h/semana</div></div>
+  <div class="role-b">
+    <p>Es la línea de IA y arranca <b>en fase 3</b>, no ahora. Mientras tanto, esta función
+      solo consume tiempo en una cosa: ir guardando material propio a medida que resuelves
+      problemas reales, para que cuando construyas el programa no partas de cero.</p>
+    <p>Recuerda el límite: el programa de ALBACODE se construye desde cero. Nada del material
+      de Intezia se reutiliza.</p>
+  </div>
+</div>
+
+<div class="role">
+  <div class="role-h"><h3>Administración</h3><div class="time">10% · ~4 h/semana</div></div>
+  <div class="role-b">
+    <p>Aburrido y no negociable. Cotizaciones, facturas, cobros, registro de ingresos y gastos,
+      y cumplimiento legal.</p>
+    <ul class="plain">
+      <li><b>Un bloque fijo semanal</b>, por ejemplo viernes en la tarde. Si no tiene hora asignada, no se hace.</li>
+      <li><b>Registra cada peso desde el primer día</b>, aunque sea en una hoja de cálculo. Sin esto no sabes si ganas o pierdes, y vas a cotizar a ciegas.</li>
+      <li><b>Mide cuánto tiempo real te costó cada proyecto.</b> Es el único dato con el que podrás subir precios con argumento.</li>
+      <li><b>Persigue los cobros sin pena.</b> Cobrar no es incómodo, es parte del trabajo.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="role">
+  <div class="role-h"><h3>Aprendizaje</h3><div class="time">5% · ~2 h/semana</div></div>
+  <div class="role-b">
+    <p>En IA, lo que sabes hoy caduca en meses. Pero ojo: <b>esta función es la excusa
+      favorita para no vender.</b> Estudiar se siente productivo y no expone a rechazo.</p>
+    <p>Dos horas a la semana, con tope. Y aprende <b>en función de un cliente o de una demo
+      concreta</b>, no por curiosidad general. Si no sabes para qué lo estás estudiando, no
+      es aprendizaje: es evasión.</p>
+  </div>
+</div>
+
+<h2><span class="n">03</span>La semana tipo</h2>
+<div class="h2note">Cinco días, unas 40 horas. Sin esto, los sombreros son teoría.</div>
+<div class="card flush">
+  <table>
+    <thead><tr><th>Día</th><th>Mañana</th><th>Tarde</th></tr></thead>
+    <tbody>
+      <tr><td><b>Lunes</b></td><td>Prospección: armar la lista de la semana y enviar los primeros contactos.</td><td>Implementación del proyecto activo.</td></tr>
+      <tr><td><b>Martes</b></td><td>Reuniones y diagnósticos.</td><td>Implementación.</td></tr>
+      <tr><td><b>Miércoles</b></td><td>Implementación en bloque largo, sin interrupciones.</td><td>Contenido: documentar y publicar.</td></tr>
+      <tr><td><b>Jueves</b></td><td>Reuniones, propuestas y seguimiento de los que no respondieron.</td><td>Implementación.</td></tr>
+      <tr><td><b>Viernes</b></td><td>Cierre de entregas de la semana.</td><td>Administración, cobros y revisión de números. Aprendizaje si sobra tiempo.</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="card">
+  <p><b>La regla que sostiene todo esto:</b> ningún día pasa sin al menos un contacto comercial
+    nuevo. Ni cuando estés desbordado entregando — sobre todo cuando estés desbordado
+    entregando, porque es justo ahí cuando se seca el embudo sin que te des cuenta.</p>
+</div>
+
+<h2><span class="n">04</span>Cómo atraes clientes</h2>
+<div class="h2note">
+  La mecánica, que es universal. Los canales específicos de Venezuela vienen en el bloque
+  siguiente, con datos verificados.
+</div>
+
+<div class="card">
+  <h3>El orden correcto de las fuentes</h3>
+  <p>Los primeros clientes no llegan por marketing. Llegan por gente que ya te conoce. Ataca
+    en este orden, porque va de mayor a menor probabilidad de cierre:</p>
+  <ol class="steps">
+    <li><b>Tu red directa.</b> Excompañeros de la universidad, profesores, contactos de Silverdata y LadinCloud, familia con negocio. No les vendes: les cuentas qué estás haciendo y les preguntas a quién conocen con ese problema.</li>
+    <li><b>La red de tu red.</b> Un referido llega con confianza prestada, y eso vale más que cualquier anuncio.</li>
+    <li><b>Negocios que ya observas.</b> Comercios y empresas donde puedes ver el problema desde afuera: la clínica donde la recepcionista copia datos a mano, la distribuidora que lleva inventario en papel.</li>
+    <li><b>Contenido y presencia.</b> Es la fuente más lenta en arrancar y la más valiosa a largo plazo. Empieza ya, pero no esperes clientes de aquí en los primeros dos meses.</li>
+    <li><b>Frío puro.</b> Contactar desconocidos sin referencia. La de menor conversión. Úsala para completar volumen, nunca como estrategia principal.</li>
+  </ol>
+</div>
+
+<div class="card">
+  <h3>La oferta de entrada: tu mejor herramienta</h3>
+  <p>El obstáculo no es el precio, es que <b>nadie le compra algo caro a un desconocido</b>.
+    Se resuelve con una puerta de entrada tan barata que decir que sí no requiera pensarlo.</p>
+  <p><b>El diagnóstico de procesos.</b> Vas al negocio, dedicas dos horas a entender cómo
+    trabajan, y entregas un documento de una página con los tres procesos más automatizables y
+    cuántas horas al mes les están costando. Gratis o casi gratis, con una condición: si
+    deciden implementar contigo, se descuenta.</p>
+  <p>Funciona por tres razones. Te mete dentro del negocio, que es donde se detectan las
+    oportunidades reales. Te posiciona como quien entiende su operación y no como quien vende
+    software. Y el documento, aunque no te contraten, circula entre gente que decide.</p>
+</div>
+
+<div class="card">
+  <h3>Cómo hablas de lo que haces</h3>
+  <p>El error que vas a cometer es hablar de herramientas. <b>Al dueño de una pyme no le
+    importa n8n</b>, le importa dejar de pagarle a alguien para copiar datos de un correo a
+    una hoja de cálculo.</p>
+  <div class="quote">
+    <b>Mal:</b> «Hago automatizaciones con n8n e integro APIs con inteligencia artificial.»<br><br>
+    <b>Bien:</b> «Ese reporte que alguien arma a mano todos los lunes, lo dejo armándose solo.
+    Lo hice en una empresa de servicios y les quitó el 30% del tiempo que le metían a eso.»
+    <em>El segundo abre una conversación; el primero la cierra.</em>
+  </div>
+  <p>Y cuando te pregunten por la IA, ahí sí usa tu postura: <b>la IA bien usada resuelve el
+    80% del trabajo repetitivo, y el 20% que queda necesita criterio humano</b>. Prometer que
+    la máquina lo hace todo es lo que hace desconfiar a un empresario que ya ha oído ese
+    discurso antes.</p>
+</div>
+
+<div class="card">
+  <h3>Los números que debes vigilar</h3>
+  <p>Si solo miras cuánto facturaste, te enteras del problema tres meses tarde. Mira estos
+    cuatro cada viernes:</p>
+  <ul class="plain">
+    <li><b>Contactos nuevos esta semana.</b> Meta: 10. Es el único que depende exclusivamente de ti.</li>
+    <li><b>Diagnósticos agendados.</b> Si contactas 10 y no consigues ninguno, el problema está en tu mensaje.</li>
+    <li><b>Propuestas enviadas y su antigüedad.</b> Una propuesta de más de tres semanas sin respuesta está muerta; deja de esperarla.</li>
+    <li><b>Tasa de cierre.</b> Si haces muchos diagnósticos y no cierras, el problema es el precio o el alcance — no el interés.</li>
+  </ul>
+</div>
+
+<h2><span class="n">05</span>Estrategia de marketing para Venezuela</h2>
+<div class="h2note">
+  Sale de cuatro investigaciones al mercado venezolano: panorama digital, viabilidad de
+  publicidad pagada, dónde se reúnen los dueños de pymes y quién más vende lo mismo. Cada
+  dato lleva su nivel de verificación.
+</div>
+
+<div class="card">
+  <h3>El dato que ordena todo lo demás</h3>
+  <p>Tres investigaciones independientes apuntaron al mismo sitio: <b>TikTok tiene la mayor
+    audiencia alcanzable de Venezuela, es imposible pautar ahí, y tu competencia casi no lo
+    usa.</b> Alcanza entre el 70% y el 84% de los adultos con internet del país; TikTok no
+    habilita la creación de cuentas publicitarias para Venezuela, así que nadie puede comprar
+    esa atención; y de todos los competidores locales identificados, solo uno publica ahí.</p>
+  <p>Esa triple coincidencia es rara y no va a durar. Es tu canal.</p>
+</div>
+
+<div class="card flush">
+  <table>
+    <thead><tr><th>Canal</th><th class="hide-s">Qué dicen los datos</th><th>Veredicto</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="co">TikTok</span></td>
+        <td class="hide-s">Segunda red del país, 70-84% de adultos con internet. Video corto vertical es el formato dominante. Solo un competidor lo usa.</td>
+        <td><span class="tag t-ok">prioridad 1</span><br>Orgánico. No se puede pautar.</td>
+      </tr>
+      <tr>
+        <td><span class="co">WhatsApp</span></td>
+        <td class="hide-s">Es la infraestructura comercial de facto del país, no un canal más: por ahí pasan consultas, cotizaciones, pagos y referidos, también entre empresas.</td>
+        <td><span class="tag t-ok">prioridad 1</span><br>Cierre y conversión.</td>
+      </tr>
+      <tr>
+        <td><span class="co">Instagram</span></td>
+        <td class="hide-s">Tercera red (~10M). Es donde ya están tus competidores locales con contenido tipo tutorial.</td>
+        <td><span class="tag t-ok">prioridad 2</span><br>Vitrina y prueba social.</td>
+      </tr>
+      <tr>
+        <td><span class="co">Facebook</span></td>
+        <td class="hide-s">Lidera en volumen absoluto. Menos atractivo para marca personal, pero es donde mejor funciona la pauta si decides invertir.</td>
+        <td><span class="tag t-warn">prioridad 3</span><br>Solo si pautas.</td>
+      </tr>
+      <tr>
+        <td><span class="co">LinkedIn</span></td>
+        <td class="hide-s">5,6-6,4M cuentas registradas, pero es un techo teórico: buena parte es diáspora y no hay evidencia de actividad local real. Tus competidores no lo usan; uno con oficina física y partner de Lenovo tiene 296 seguidores.</td>
+        <td><span class="tag t-warn">credibilidad</span><br>No sirve para prospectar.</td>
+      </tr>
+      <tr>
+        <td><span class="co">X / Twitter</span></td>
+        <td class="hide-s">675 mil usuarios, 2,4% de la población. Marginal.</td>
+        <td><span class="tag t-bad">ignorar</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="card bad">
+  <h3>Dos restricciones físicas que cambian el formato</h3>
+  <p><b>El 90% de los hogares venezolanos sufre cortes eléctricos</b>, diarios o esporádicos
+    — 237 apagones documentados solo entre enero y febrero de 2025. La velocidad en Caracas es
+    decente (85-92 Mbps en fija), pero eso no te salva de que se vaya la luz a mitad de una
+    transmisión.</p>
+  <p>Conclusión operativa: <b>nada de webinars en vivo, nada de lives como eje</b>. Todo
+    pregrabado, corto, descargable y consumible en el teléfono. Si haces un evento en vivo,
+    grábalo aparte y asume que la mitad se va a caer.</p>
+</div>
+
+<div class="card">
+  <h3>Cómo se usa WhatsApp sin parecer un vendedor de catálogo</h3>
+  <p>En Venezuela el negocio se cierra en WhatsApp, así que el error no es usarlo: es usarlo
+    mal. Tres reglas.</p>
+  <ul class="plain">
+    <li><b>Cuenta de WhatsApp Business separada de la personal.</b> Con catálogo, horario y
+      mensaje de bienvenida. Mezclarlo con tu número personal te cuesta credibilidad y
+      tranquilidad.</li>
+    <li><b>Todo el contenido debe terminar empujando a una conversación</b>, no a un formulario.
+      El formulario es fricción en un mercado que vive en el chat.</li>
+    <li><b>Nada de difusión masiva.</b> Es la forma más rápida de que te bloqueen y de quemar
+      tu número, que es tu activo comercial.</li>
+  </ul>
+  <p><span class="tag t-warn">verificar tú mismo</span> Una fuente única, no confirmada por
+    Meta, afirma que el objetivo de campaña «clic a WhatsApp» estaría restringido para cuentas
+    venezolanas. Si vas a pautar buscando conversaciones, compruébalo antes de presupuestar.</p>
+</div>
+
+<h2><span class="n">06</span>Contra quién compites</h2>
+<div class="h2note">
+  El mercado no está vacío ni saturado: hay entre 8 y 12 jugadores venezolanos reales, casi
+  todos pequeños o unipersonales. Cuidado con el ruido — varias empresas extranjeras generan
+  páginas del tipo «empresa de IA en Venezuela» sin tener operación allí.
+</div>
+<div class="card flush">
+  <table>
+    <thead><tr><th>Quién</th><th class="hide-s">Qué hace</th><th>Qué te enseña</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="co">Intezia</span><br><span class="tag t-bad">líder</span></td>
+        <td class="hide-s">OpenAI Select Partner, +200 empresas y +30.000 profesionales capacitados, clientes ancla verificables por prensa, ~15.000 seguidores en Instagram y evento propio como generador de leads.</td>
+        <td>Domina la capacitación corporativa en IA. Es tu ex-empleador y es el líder del mercado donde está tu línea 2. Razón de peso para que tu punta de lanza sea automatización.</td>
+      </tr>
+      <tr>
+        <td><span class="co">ConsultIA</span></td>
+        <td class="hide-s">Caracas. RPA, chatbots, servidores de IA privados. Acepta pago móvil y cripto. Instagram y TikTok.</td>
+        <td><b>Ya ofrece diagnóstico gratis</b>, la misma puerta de entrada del bloque 04. No es original: tendrás que diferenciar la tuya por profundidad, no por precio.</td>
+      </tr>
+      <tr>
+        <td><span class="co">Morna Tech</span></td>
+        <td class="hide-s">Producto propio «SuperAPI», agente de WhatsApp con IA. Caso real con un concesionario Toyota.</td>
+        <td>Confirma que el agente de WhatsApp es el caso de uso más vendible del país.</td>
+      </tr>
+      <tr>
+        <td><span class="co">Caracas Development · IDEALNET · Inteligencia Artificial C.A.</span></td>
+        <td class="hide-s">Automatización, agentes de IA y software a medida. IDEALNET es partner Lenovo con oficina física.</td>
+        <td>IDEALNET tiene 296 seguidores en LinkedIn pese a su posicionamiento institucional: venden por relaciones, no por contenido. Ahí tienes espacio.</td>
+      </tr>
+      <tr>
+        <td><span class="co">Tecnologica LC</span></td>
+        <td class="hide-s">Zulia. Agentes de IA con n8n.</td>
+        <td>El <b>único precio público</b> de automatización que existe en el mercado venezolano: desde US$299 más US$79 mensuales. <span class="tag t-warn">confianza media</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="card">
+  <h3>El vacío que puedes ocupar mañana</h3>
+  <p><b>Ninguna empresa venezolana publica precios</b> de automatización ni de capacitación
+    corporativa en IA. Ninguna. Eso no es una limitación de la búsqueda, es un vacío real de
+    transparencia en todo el sector.</p>
+  <p>Publicar los tuyos —aunque sea un «desde»— te diferencia el primer día, filtra a quien no
+    puede pagarte antes de gastarte una reunión, y construye la confianza que más le falta a
+    un proveedor desconocido. Es la decisión de posicionamiento más barata y de mayor retorno
+    que tienes disponible.</p>
+</div>
+
+<h2><span class="n">07</span>Las cuatro jugadas de mayor apalancamiento</h2>
+<div class="h2note">Ordenadas por relación entre lo que cuestan y lo que devuelven. La primera es la más importante del documento.</div>
+
+<div class="card hot" style="border-color:var(--accent);border-width:1.5px">
+  <h3>1. Funda la comunidad de IA aplicada que no existe</h3>
+  <p><b>No hay circuito tech activo en Caracas.</b> GDG Caracas, el grupo de desarrolladores de
+    Google, tiene su último evento registrado en junio de 2017. Caracas Blockchain Week no
+    muestra ediciones después de 2023 y su dominio ya no resuelve. La ciudad se quedó sin
+    espacio técnico.</p>
+  <p>Convocar y facilitar es exactamente tu oficio: vienes de dictar capacitaciones a equipos
+    corporativos. Un encuentro mensual de IA aplicada, aunque empiece con ocho personas en un
+    coworking, <b>te convierte en el dueño de la audiencia en vez de competir por ella</b>. Es
+    la única jugada de esta lista que te da posición de autoridad sin que tengas que comprarla
+    ni esperar años.</p>
+</div>
+
+<div class="card">
+  <h3>2. Entra por la obligación legal, no por el entusiasmo</h3>
+  <p>La facturación electrónica es obligatoria por las providencias del SENIAT
+    (SNAT/2024/000102 y /000121). Las pymes venezolanas <b>se están digitalizando por ley, no
+    por convencimiento</b> — y una empresa forzada a cambiar su facturación acaba de abrir un
+    problema de procesos que no sabe resolver.</p>
+  <p>Es el mejor gancho de entrada disponible: no tienes que convencer a nadie de que la IA es
+    el futuro, solo de que tú le resuelves algo que ya está obligado a hacer.</p>
+</div>
+
+<div class="card">
+  <h3>3. Startup Venezuela Summit — 21 al 23 de octubre, Caracas</h3>
+  <p>El evento con mejor trazabilidad del país y la mayor concentración de fundadores y
+    gerentes tech, con jornada «Builders Lab». Cae exactamente cuando arranca tu Fase 2 de
+    captación.</p>
+  <p>No vayas de asistente. <b>Ve con la demo preparada</b> y con el objetivo de salir con
+    diez conversaciones abiertas, no con diez tarjetas.</p>
+</div>
+
+<div class="card">
+  <h3>4. Los dos gremios con encaje directo</h3>
+  <p><b>Cavedatos</b> (gremio de TI, junta nueva 2026-2028) y <b>Cavecom-e</b> (comercio
+    electrónico, con presidente accesible y presencia constante en prensa). Además, el
+    <b>Comité de Innovación y Tecnología de la Cámara de Comercio de Caracas</b>, donde puedes
+    ofrecerte como ponente — dictar es gratis para ti y te pone frente a la audiencia correcta.</p>
+  <p>Olvídate de Fedecámaras para afiliarte: afilia cámaras, no empresas sueltas, y el trámite
+    tarda hasta 90 días. Sus expos sí son terreno útil. VenAmCham está orientada a medianas y
+    multinacionales, y probablemente su cuota no tenga sentido para ti todavía.</p>
+  <p><span class="tag t-warn">verificar</span> En el vault, la propuesta de Bolipuerto se
+    facturaba «a nombre en clave Cavedatos». Si es el mismo gremio de TI, ya hay un contacto
+    previo — pero compruébalo antes de asumirlo: puede ser homonimia, y el vínculo pasaría por
+    Intezia, no por ti.</p>
+</div>
+
+<h2><span class="n">08</span>Qué publicas, en concreto</h2>
+<div class="h2note">Una hora al día. La regla: nunca publiques opinión sobre IA, publica resultados.</div>
+<div class="card flush">
+  <table>
+    <thead><tr><th>Formato</th><th>Qué es</th><th class="hide-s">Dónde</th></tr></thead>
+    <tbody>
+      <tr><td><b>«Antes y después»</b></td><td>Grabación de pantalla de 30-45 segundos: el proceso manual, y luego el automático. Sin explicar la herramienta.</td><td class="hide-s">TikTok · Instagram</td></tr>
+      <tr><td><b>«Esto te está costando»</b></td><td>Un proceso común de pyme y cuántas horas al mes consume. Siempre con el número al frente.</td><td class="hide-s">TikTok · Instagram</td></tr>
+      <tr><td><b>Caso de cliente</b></td><td>El problema, lo que se hizo, el resultado medido. Con permiso escrito; sin nombre si no lo dan.</td><td class="hide-s">Todos</td></tr>
+      <tr><td><b>Tutorial corto</b></td><td>Algo pequeño y útil que puedan hacer solos. Regalar valor genera más consultas que prometerlo.</td><td class="hide-s">TikTok · Instagram</td></tr>
+      <tr><td><b>Desmontar el humo</b></td><td>Tu postura del 80/20: qué hace y qué no hace la IA. Te separa de quien promete magia.</td><td class="hide-s">Instagram · LinkedIn</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="card">
+  <p><b>Frecuencia mínima sostenible:</b> tres publicaciones por semana en TikTok e Instagram,
+    y una pieza más larga cada dos semanas. Es mejor tres a la semana durante seis meses que
+    diez a la semana durante tres.</p>
+</div>
+
+<h2><span class="n">09</span>Publicidad pagada: cuándo y cómo</h2>
+<div class="card">
+  <p><b>Sí puedes pautar desde Caracas</b>, y el miedo a las sanciones es infundado: Venezuela
+    no está bajo embargo integral —eso aplica a Cuba, Irán, Corea del Norte y Siria—, las
+    sanciones son selectivas contra el gobierno y PDVSA, y la Licencia General 25 de OFAC
+    autoriza expresamente los servicios de internet. El obstáculo es <b>bancario, no legal</b>:
+    las tarjetas de bancos venezolanos no son aceptadas.</p>
+  <h4>La solución práctica</h4>
+  <p>Tarjeta virtual en dólares de <b>Zinli, Neomoon o Airtm</b>, recargable en bolívares. Sin
+    empresa en el exterior. Con eso funciona Meta Ads; Google Ads también, pero su propia
+    documentación lista a Venezuela entre los países sin pagos prepago, así que va por
+    postpago. TikTok Ads está bloqueado a nivel de plataforma. LinkedIn Ads quedó sin
+    verificar y el bolívar no figura entre sus monedas.</p>
+  <h4>Cuándo</h4>
+  <p><b>No antes de tener un caso publicable.</b> Pagar para llevar tráfico a un perfil sin
+    pruebas es quemar dinero. Primero contenido orgánico y primeros clientes; la pauta sirve
+    para amplificar lo que ya demostró funcionar, no para sustituirlo.</p>
+</div>
+
+<h2><span class="n">10</span>Lo que NO vas a hacer en marketing</h2>
+<div class="two">
+  <div class="card">
+    <h3>Esfuerzo mal puesto</h3>
+    <ul class="plain">
+      <li><b>Construir tu estrategia sobre LinkedIn.</b> La audiencia local activa no está comprobada y tus competidores no venden por ahí.</li>
+      <li><b>Webinars y transmisiones en vivo</b> como eje. Los apagones los vuelven frágiles.</li>
+      <li><b>X/Twitter.</b> 2,4% de la población.</li>
+      <li><b>Pautar antes de tener pruebas</b> que mostrar.</li>
+      <li><b>Difusión masiva por WhatsApp.</b> Te quema el número.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Errores de mensaje</h3>
+    <ul class="plain">
+      <li><b>Hablar de herramientas.</b> Nadie compra n8n, compran dejar de perder horas.</li>
+      <li><b>Prometer que la IA lo hace todo.</b> Es lo que ya desconfía el empresario, y contradice tu propia postura.</li>
+      <li><b>Competirle a Intezia en su terreno</b> estando en el arranque. Es OpenAI Select Partner con más de 200 empresas atendidas.</li>
+      <li><b>Copiar el «diagnóstico gratis»</b> sin diferenciarlo. ConsultIA ya lo ofrece.</li>
+      <li><b>Publicar opinión sobre IA.</b> Sobra. Publica resultados.</li>
+    </ul>
+  </div>
+</div>
+
+<footer>
+  Manual de operación de ALBACODE · 11 de septiembre de 2026. Las distribuciones de tiempo
+  son para la fase de arranque y deben revisarse cuando haya cartera estable. Los bloques 05
+  a 10 salen de cuatro investigaciones al mercado venezolano; lo marcado
+  <span class="tag t-warn">verificar</span> son puntos donde no hay dato confirmado y hace
+  falta comprobarlo antes de actuar. Las cifras de audiencia y los precios de la competencia
+  caducan: revalídalos antes de tomar decisiones grandes sobre ellos.
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ALBACODE — Roadmap</title>
+<style>
+  :root{
+    --bg:#f5f6f7; --card:#fff; --ink:#15181c; --soft:#414750; --mute:#767d86;
+    --rule:#e2e5ea; --accent:#b5610f; --accent-bg:#fdf2e6; --accent-ink:#8d4a09;
+    --ok:#1c6b45; --ok-bg:#e8f4ed; --warn:#8a5a10; --warn-bg:#fcf3e2;
+    --bad:#98342c; --bad-bg:#fbeceb; --ghost:#f0f2f4;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#131619; --card:#1b1f23; --ink:#e9ecef; --soft:#b5bcc3; --mute:#848c94;
+      --rule:#2a3035; --accent:#e59245; --accent-bg:#2c2014; --accent-ink:#f0a862;
+      --ok:#6fcf9b; --ok-bg:#16291f; --warn:#e0b361; --warn-bg:#2a2214;
+      --bad:#e8918a; --bad-bg:#2b1917; --ghost:#22272b;
+    }
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.55;font-size:15px;
+    padding:30px 18px 70px;
+  }
+  .wrap{max-width:1020px;margin:0 auto}
+
+  .brand{display:flex;align-items:center;gap:11px;margin-bottom:5px}
+  .logo{
+    width:38px;height:38px;border-radius:9px;
+    background:linear-gradient(135deg,var(--accent),#e0a050);
+    color:#fff;display:flex;align-items:center;justify-content:center;
+    font-size:17px;font-weight:700;letter-spacing:-.5px;flex:none;
+  }
+  h1{font-size:28px;font-weight:650;letter-spacing:-.6px;line-height:1.1}
+  .sub{color:var(--mute);font-size:13.5px;margin-top:6px}
+
+  .thesis{
+    margin-top:18px;padding:16px 18px;background:var(--card);
+    border-left:3px solid var(--accent);border-radius:0 7px 7px 0;color:var(--soft);
+  }
+  .thesis b{color:var(--ink)}
+
+  h2{
+    font-size:12px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;
+    color:var(--accent);margin:38px 0 4px;
+  }
+  h2 .n{color:var(--mute);font-weight:600;margin-right:7px}
+  .h2note{color:var(--mute);font-size:13.5px;margin-bottom:14px;max-width:80ch}
+
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:9px;padding:17px 19px;margin-bottom:12px}
+  .card h3{font-size:16px;font-weight:650;margin-bottom:6px}
+  .card p{color:var(--soft);font-size:14.5px;margin-bottom:9px}
+  .card p:last-child{margin-bottom:0}
+  .card.hot{border-color:var(--accent);border-width:1.5px}
+  .card.bad{border-left:3px solid var(--bad)}
+
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  .card.flush{padding:0;overflow:hidden}
+  th{
+    text-align:left;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
+    color:var(--mute);padding:10px 14px;border-bottom:1px solid var(--rule);white-space:nowrap;
+  }
+  td{padding:11px 14px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--soft)}
+  tr:last-child td{border-bottom:0}
+  td b,.co{color:var(--ink);font-weight:600}
+
+  .tag{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.4px;padding:2px 7px;border-radius:3px;text-transform:uppercase;white-space:nowrap}
+  .t-1{background:var(--accent-bg);color:var(--accent-ink)}
+  .t-ok{background:var(--ok-bg);color:var(--ok)}
+  .t-warn{background:var(--warn-bg);color:var(--warn)}
+  .t-bad{background:var(--bad-bg);color:var(--bad)}
+
+  .phase{background:var(--card);border:1px solid var(--rule);border-radius:9px;margin-bottom:13px;overflow:hidden}
+  .phase-h{padding:14px 18px;border-bottom:1px solid var(--rule);background:var(--ghost)}
+  .phase-h .when{font-size:11.5px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;color:var(--accent)}
+  .phase-h h3{font-size:17px;font-weight:650;margin:3px 0 4px}
+  .phase-h .goal{font-size:13.5px;color:var(--mute)}
+  .phase-b{padding:15px 18px}
+
+  label.chk{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-bottom:1px solid var(--rule);cursor:pointer}
+  label.chk:last-child{border-bottom:0}
+  label.chk input{margin-top:3.5px;flex:none;width:15px;height:15px;accent-color:var(--accent);cursor:pointer}
+  label.chk span{font-size:14.5px;color:var(--soft)}
+  label.chk span b{color:var(--ink);font-weight:600}
+  label.chk input:checked + span{opacity:.5;text-decoration:line-through}
+
+  ul.plain{list-style:none}
+  ul.plain li{position:relative;padding-left:15px;margin-bottom:7px;color:var(--soft);font-size:14.5px}
+  ul.plain li::before{content:"";position:absolute;left:0;top:8px;width:4px;height:4px;border-radius:50%;background:var(--accent)}
+  ul.plain li b{color:var(--ink)}
+
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media (max-width:720px){
+    .two{grid-template-columns:1fr}
+    body{padding:20px 13px 45px} h1{font-size:23px}
+    th,td{padding:9px 11px;font-size:13px} .hide-s{display:none}
+  }
+  footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--rule);color:var(--mute);font-size:12.5px}
+  code{font-family:Consolas,Menlo,monospace;font-size:12.5px;background:var(--accent-bg);color:var(--accent-ink);padding:1.5px 5px;border-radius:3px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="brand">
+  <div class="logo">AC</div>
+  <div>
+    <h1>ALBACODE</h1>
+    <div class="sub">Roadmap de arranque · escrito el 11 de septiembre de 2026</div>
+  </div>
+</div>
+
+<div class="thesis">
+  <b>El posicionamiento sale de ti, no de un eslogan.</b> Tu propia postura registrada es que
+  la IA bien usada resuelve el 80% de los problemas prácticos, y que el 20% restante sigue
+  exigiendo criterio humano. Eso es lo que vende ALBACODE: no «IA» como quien vende humo, sino
+  <b>el 80% automatizado y el criterio puesto donde todavía hace falta</b>. Es una promesa
+  honesta, verificable, y que te separa de quien promete que la máquina lo hace todo.
+</div>
+
+<h2><span class="n">00</span>La decisión que ya tomaste, y cómo la hacemos sobrevivir</h2>
+<div class="card bad">
+  <h3>Tres líneas en el catálogo, una sola en construcción</h3>
+  <p>Elegiste abrir automatización, IA y desarrollo a la vez. El riesgo no es que sea mala
+    idea: es que tres líneas significan tres públicos, tres discursos y tres sets de material,
+    y un fundador solo no construye eso en paralelo. Es la forma más común de no arrancar
+    ninguna.</p>
+  <p><b>La salida es separar lo que ofreces de lo que construyes.</b> Desde el día uno tu
+    marca dice que haces las tres cosas — eso no cuesta nada y amplía la superficie comercial.
+    Pero el material demostrable, los casos y el guion de venta los construyes <b>de una en
+    una</b>, empezando por automatización, porque es la que se vende más rápido y la única que
+    puedes <em>mostrar funcionando</em> en una llamada de quince minutos.</p>
+  <p>Si a la sexta semana automatización no ha producido ni un cliente, ahí sí se revisa el
+    orden. No antes.</p>
+</div>
+
+<h2><span class="n">01</span>Las tres líneas, definidas</h2>
+<div class="h2note">
+  Un servicio sin entregable definido no se vende: se negocia cada vez y se regala por partes.
+  Esto es lo que ofreces, qué recibe el cliente y qué necesitas tener listo antes de poder
+  cobrarlo.
+</div>
+<div class="card flush">
+  <table>
+    <thead><tr><th>Línea</th><th>Qué recibe el cliente</th><th class="hide-s">Antes de venderlo necesitas</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="co">Automatización</span><br><span class="tag t-1">punta de lanza</span></td>
+        <td>Un proceso manual convertido en flujo automático: conexión de correo, base de
+          datos, notificaciones, CRM y reportes. Entregas el flujo andando, documentado, más
+          una sesión de traspaso.</td>
+        <td class="hide-s">Tres demos públicas funcionando y un caso escrito con el antes y el después.</td>
+      </tr>
+      <tr>
+        <td><span class="co">Especialización en IA</span></td>
+        <td>Formación in-company o 1-a-1: prompting aplicado al trabajo real del equipo,
+          construcción de asistentes propios y criterios de uso. Entregas workbook, set de
+          prompts y medición de cierre.</td>
+        <td class="hide-s">Un programa propio, construido desde cero. Ver el bloque de límites con Intezia.</td>
+      </tr>
+      <tr>
+        <td><span class="co">Desarrollo</span></td>
+        <td>Aplicaciones y sistemas a medida: web, integraciones, APIs, paneles internos.
+          Es tu línea de tickets más altos y ciclo más largo.</td>
+        <td class="hide-s">Portafolio visible. Hoy tu GitHub no lo sostiene — es el primer arreglo del roadmap.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="card">
+  <h3>Cómo pones precio, ya que no tienes referencias propias</h3>
+  <p>No cobres por hora. Cobrar por hora te castiga justo por ser rápido, que es tu ventaja
+    con IA. <b>Cobra por paquete cerrado, con alcance escrito.</b></p>
+  <p>Para fijar las cifras necesitas datos reales, no una corazonada: pide cotización a dos o
+    tres proveedores locales del mismo servicio y mira qué cobran. Con eso arma tres niveles
+    — diagnóstico corto, implementación, acompañamiento mensual — y coloca el de entrada
+    deliberadamente bajo: los primeros tres clientes no los cobras caro, los cobras <b>a cambio
+    del permiso de publicar el caso</b>. Ese permiso vale más que el dinero ahora.</p>
+  <p><span class="tag t-warn">verificar</span> Este documento no trae cifras porque no tengo
+    datos verificados del mercado venezolano de 2026. Ponerlas inventadas te haría cotizar mal.</p>
+</div>
+
+<h2><span class="n">02</span>El roadmap</h2>
+<div class="h2note">
+  Cuatro fases hasta fin de año. Las casillas guardan tu progreso en este navegador.
+  Mañana sábado 12 cierras la última sesión de Bolipuerto, así que la Fase 0 arranca el
+  domingo 13.
+</div>
+
+<div class="phase">
+  <div class="phase-h">
+    <div class="when">Fase 0 · 13 al 20 de septiembre</div>
+    <h3>Existir</h3>
+    <div class="goal">Meta: que ALBACODE sea algo que se puede nombrar, escribir y mostrar. Sin gastar dinero todavía.</div>
+  </div>
+  <div class="phase-b">
+    <label class="chk"><input type="checkbox" data-k="f0a"><span>Verificar que <b>el nombre ALBACODE esté libre</b>: buscar en el registro mercantil venezolano, en redes y el dominio. Si está tomado, es mejor saberlo hoy que con la marca ya impresa.</span></label>
+    <label class="chk"><input type="checkbox" data-k="f0b"><span>Registrar <b>dominio y correo profesional</b>. Escribirle a una empresa desde un Gmail personal te cuesta credibilidad antes de abrir la boca.</span></label>
+    <label class="chk"><input type="checkbox" data-k="f0c"><span>Escribir <b>la frase de una línea</b> que explica qué hace ALBACODE, sin la palabra «soluciones» ni «innovador». Si no la puedes decir en diez segundos, no la va a repetir nadie.</span></label>
+    <label class="chk"><input type="checkbox" data-k="f0d"><span>Definir <b>los tres paquetes</b> de automatización con alcance escrito: qué incluye, qué no incluye, en cuánto tiempo.</span></label>
+    <label class="chk"><input type="checkbox" data-k="f0e"><span>Fijar por escrito <b>los límites con Intezia</b> (ver bloque 04). Diez minutos ahora te evitan un problema de reputación después.</span></label>
+    <label class="chk"><input type="checkbox" data-k="f0f"><span>Identidad mínima: logo simple, dos colores, una tipografía. <b>No contrates diseñador todavía</b> — hazlo tú en Canva, que lo dominas, y lo rehaces cuando factures.</span></label>
+  </div>
+</div>
+
+<div class="phase">
+  <div class="phase-h">
+    <div class="when">Fase 1 · 21 de septiembre al 18 de octubre</div>
+    <h3>Evidencia</h3>
+    <div class="goal">Meta: que alguien que te busca en internet encuentre pruebas, no promesas. Esta fase es la que más te falta hoy.</div>
+  </div>
+  <div class="phase-b">
+    <label class="chk"><input type="checkbox" data-k="f1a"><span><b>Arreglar el GitHub.</b> Hoy tiene cinco repos sin descripción, ninguno de IA ni de automatización, y contradice todo lo que dice tu CV. Es el primer sitio donde te van a mirar.</span></label>
+    <label class="chk"><input type="checkbox" data-k="f1b"><span>README real en <code>mi-isp-app</code>: qué problema resuelve, stack y capturas. Es tu trabajo de grado y está invisible.</span></label>
+    <label class="chk"><input type="checkbox" data-k="f1c"><span>Renombrar <code>Dise-o-Proyecto</code>, que tiene el nombre roto por encoding, y darle descripción a cada repo.</span></label>
+    <label class="chk"><input type="checkbox" data-k="f1d"><span><b>Publicar tres automatizaciones demo</b> con n8n, exportadas como JSON y sin credenciales: por ejemplo correo entrante que alimenta una base y notifica, reporte automático recurrente, y sincronización entre un formulario y un CRM. Cada una con su README y un GIF de treinta segundos.</span></label>
+    <label class="chk"><input type="checkbox" data-k="f1e"><span><b>Escribir un caso</b> con el antes y el después del 30% de reducción de tiempos que ya lograste. Sin nombrar al cliente si no tienes permiso: «una empresa de servicios» basta.</span></label>
+    <label class="chk"><input type="checkbox" data-k="f1f"><span><b>Reposicionar LinkedIn</b> a ALBACODE. Es el canal donde te van a validar antes de contestarte un correo.</span></label>
+    <label class="chk"><input type="checkbox" data-k="f1g"><span><b>Una sola página web.</b> Qué haces, tres servicios, tres pruebas, un botón de contacto. Nada más. Una web de diez secciones sin clientes es tiempo tirado.</span></label>
+    <label class="chk"><input type="checkbox" data-k="f1h"><span>Preparar <b>la demo de quince minutos</b>: una automatización que puedas mostrar corriendo en vivo. Esto cierra más ventas que cualquier presentación.</span></label>
+  </div>
+</div>
+
+<div class="phase">
+  <div class="phase-h">
+    <div class="when">Fase 2 · 19 de octubre al 15 de noviembre</div>
+    <h3>Primeros clientes</h3>
+    <div class="goal">Meta: dos clientes pagos y un caso publicable. Aquí se decide si ALBACODE es un negocio o un proyecto bonito.</div>
+  </div>
+  <div class="phase-b">
+    <label class="chk"><input type="checkbox" data-k="f2a"><span><b>Lista de 30 pymes venezolanas</b> concretas, con nombre y persona de contacto. Priorizar las que tienen procesos manuales visibles: distribuidoras, clínicas, agencias, estudios contables, colegios, inmobiliarias.</span></label>
+    <label class="chk"><input type="checkbox" data-k="f2b"><span>Empezar por <b>tu red real</b>: excompañeros, profesores, contactos de Silverdata y LadinCloud. La primera venta casi nunca viene de un desconocido.</span></label>
+    <label class="chk"><input type="checkbox" data-k="f2c"><span><b>Oferta de entrada con fricción baja</b>: un diagnóstico corto donde detectas los tres procesos más automatizables del negocio. Barato o gratis, con una condición — si implementan contigo, se descuenta.</span></label>
+    <label class="chk"><input type="checkbox" data-k="f2d"><span>Guion de venta de tres minutos, centrado en <b>cuánto tiempo pierden hoy</b>, no en qué herramienta usas. Al cliente no le importa n8n, le importa dejar de copiar datos a mano.</span></label>
+    <label class="chk"><input type="checkbox" data-k="f2e"><span><b>Contactar 10 por semana.</b> Es el número que sostiene el embudo. Menos que eso no genera ritmo.</span></label>
+    <label class="chk"><input type="checkbox" data-k="f2f"><span>Plantilla de <b>propuesta y acuerdo simple</b>: alcance, plazo, precio, qué pasa si el cliente cambia el alcance a mitad de camino. Esto último te va a salvar.</span></label>
+    <label class="chk"><input type="checkbox" data-k="f2g"><span><b>Cobrar 50% por adelantado</b> desde el primer cliente. No es desconfianza, es la norma del oficio.</span></label>
+    <label class="chk"><input type="checkbox" data-k="f2h"><span>Pedir <b>permiso escrito para publicar el caso</b> al cerrar cada trabajo. Es tu activo comercial del trimestre siguiente.</span></label>
+  </div>
+</div>
+
+<div class="phase">
+  <div class="phase-h">
+    <div class="when">Fase 3 · 16 de noviembre al 31 de diciembre</div>
+    <h3>Formalizar y repetir</h3>
+    <div class="goal">Meta: dejar de improvisar cada venta y poder facturar como empresa.</div>
+  </div>
+  <div class="phase-b">
+    <label class="chk"><input type="checkbox" data-k="f3a"><span><b>Formalización legal y fiscal.</b> <span class="tag t-warn">verificar</span> Averiguar con un contador venezolano qué figura conviene (firma personal o compañía anónima), qué exige el registro mercantil, el RIF y la facturación ante el SENIAT. No tomes esto de internet: las reglas cambian y el costo de equivocarse lo pagas tú.</span></label>
+    <label class="chk"><input type="checkbox" data-k="f3b"><span>Definir <b>cómo cobras a clientes fuera de Venezuela</b> antes de tener el primero. Es el punto que rompe más negocios de este tipo que la falta de clientes.</span></label>
+    <label class="chk"><input type="checkbox" data-k="f3c"><span><b>Precios versión 2</b>, ya con datos reales de lo que costó entregar los primeros trabajos. Casi seguro descubrirás que cobraste poco.</span></label>
+    <label class="chk"><input type="checkbox" data-k="f3d"><span><b>Sistematizar la entrega</b>: plantilla de propuesta, checklist de arranque, formato de documentación, correo de cierre. Que el segundo cliente cueste la mitad de esfuerzo que el primero.</span></label>
+    <label class="chk"><input type="checkbox" data-k="f3e"><span>Publicar <b>un contenido técnico cada dos semanas</b> — una automatización explicada. Es la vía más barata de que te encuentren siendo desconocido.</span></label>
+    <label class="chk"><input type="checkbox" data-k="f3f"><span>Recién ahora, <b>abrir la segunda línea</b>: construir el programa de especialización en IA, con material propio desde cero.</span></label>
+  </div>
+</div>
+
+<h2><span class="n">03</span>Cómo sabes si va bien</h2>
+<div class="card flush">
+  <table>
+    <thead><tr><th>Momento</th><th>Señal de que vas bien</th><th>Señal de alarma</th></tr></thead>
+    <tbody>
+      <tr><td><b>Fin de septiembre</b></td><td>La marca existe, los paquetes están escritos y el GitHub ya no te contradice.</td><td>Sigues afinando el logo. Es la trampa clásica: se siente productivo y no vende nada.</td></tr>
+      <tr><td><b>Fin de octubre</b></td><td>Tres demos públicas, un caso escrito y al menos diez conversaciones reales abiertas.</td><td>Web lista y cero contactos hechos. Construir es cómodo; vender no.</td></tr>
+      <tr><td><b>Fin de noviembre</b></td><td>Dos clientes pagos y uno de ellos autorizó publicar el caso.</td><td>Muchas reuniones y ningún cierre: el problema está en el precio o en el alcance, no en el interés.</td></tr>
+      <tr><td><b>Fin de diciembre</b></td><td>Facturas, cobras y tienes un proceso repetible.</td><td>Cada trabajo sigue siendo artesanal y cuesta lo mismo que el primero.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2><span class="n">04</span>Los límites con Intezia</h2>
+<div class="card bad">
+  <p>No firmaste nada, así que legalmente puedes ofrecer servicios similares. <b>Pero la línea
+    ética no depende de haber firmado</b>, y en un mercado tan pequeño como el venezolano tu
+    reputación es el activo que tardas años en construir y una semana en perder.</p>
+  <ul class="plain">
+    <li><b>No abordes a sus clientes.</b> Bolipuerto, Grupo Corpos, Venemergencia, Hidrocaven,
+      Credicard y Dr. Care son cartera de Intezia. Si alguno te busca a ti por iniciativa
+      propia, es otra conversación — pero tú no los llamas.</li>
+    <li><b>No reutilices su material.</b> Los decks, workbooks, sets de prompts y dashboards
+      que hiciste allí son de Intezia. El programa de ALBACODE se construye desde cero.</li>
+    <li><b>No uses su metodología registrada</b> ni sus instrumentos de medición con otro
+      nombre. Que hayas aprendido que hay que medir la satisfacción es tuyo; el instrumento
+      concreto que usaban, no.</li>
+    <li><b>Sí puedes decir que trabajaste ahí</b> y qué hiciste. Esa es tu trayectoria
+      profesional y va en tu CV y en tu web con toda naturalidad.</li>
+    <li><b>Termina bien lo que queda.</b> Mañana cierras Bolipuerto. Hazlo con el mismo nivel
+      que si te quedaras — es tu principio registrado de no pasar por alto ninguna sesión, y
+      además es lo que hace que te recomienden después.</li>
+  </ul>
+</div>
+
+<h2><span class="n">05</span>Lo que NO vas a hacer</h2>
+<div class="h2note">Un fundador solo se hunde por lo que acepta, no por lo que le falta. Esta lista vale tanto como el roadmap.</div>
+<div class="two">
+  <div class="card">
+    <h3>Nada de esto, todavía</h3>
+    <ul class="plain">
+      <li>Contratar a nadie.</li>
+      <li>Pagar publicidad antes de tener un caso que mostrar.</li>
+      <li>Rehacer la web más de una vez.</li>
+      <li>Comprar herramientas de pago que no exija un cliente real.</li>
+      <li>Aceptar un proyecto sin adelanto porque «es el primero».</li>
+      <li>Cotizar por hora.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Señales de que un cliente te va a costar dinero</h3>
+    <ul class="plain">
+      <li>Quiere una propuesta detallada antes de una sola reunión.</li>
+      <li>Pide descuento antes de saber qué incluye.</li>
+      <li>No te deja hablar con quien va a usar el sistema.</li>
+      <li>Cambia el alcance en la primera semana.</li>
+      <li>Paga tarde el adelanto. Si falla ahí, falla en todo.</li>
+    </ul>
+  </div>
+</div>
+
+<h2><span class="n">06</span>Los tres riesgos reales</h2>
+<div class="card flush">
+  <table>
+    <thead><tr><th>Riesgo</th><th>Qué lo mitiga</th></tr></thead>
+    <tbody>
+      <tr><td><b>Ingreso cero durante meses.</b> Es la apuesta principal, así que el flujo de caja es el riesgo número uno.</td>
+        <td>Define hoy cuántos meses puedes sostener sin facturar. Si son menos de tres, acepta trabajo por horas en paralelo sin culpa: financia ALBACODE, no lo contradice.</td></tr>
+      <tr><td><b>Dispersión entre las tres líneas.</b> El riesgo que ya discutimos.</td>
+        <td>La regla de construir una a la vez. Revisión honesta a las seis semanas.</td></tr>
+      <tr><td><b>Vender siendo desconocido y junior.</b> No tienes marca ni referencias.</td>
+        <td>Por eso la Fase 1 es evidencia pública y no comercial. En automatización el resultado se muestra funcionando, y eso pesa más que el currículum de quien lo hizo.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<footer>
+  Documento de trabajo de ALBACODE · 11 de septiembre de 2026. Las casillas se guardan en este
+  navegador. Lo marcado <span class="tag t-warn">verificar</span> son puntos donde no hay dato
+  confirmado y hace falta consultar una fuente real antes de actuar.
+</footer>
+
+</div>
+<script>
+(function(){
+  var K='albacode_roadmap_v1', s={};
+  try{ s=JSON.parse(localStorage.getItem(K)||'{}') }catch(e){ s={} }
+  document.querySelectorAll('input[data-k]').forEach(function(el){
+    if(s[el.dataset.k]) el.checked=true;
+    el.addEventListener('change',function(){
+      s[el.dataset.k]=el.checked;
+      try{ localStorage.setItem(K,JSON.stringify(s)) }catch(e){}
+    });
+  });
+})();
+</script>
+</body>
+</html>
